@@ -12,9 +12,19 @@ fn mv(args: Vec<String>) {
     }
 }
 
+#[cfg(unix)]
 fn mv_more_than_one(files: Vec<String>) {
     for i in files.iter().skip(1) {
         let _ = Command::new("mv")
+            .arg(i)
+            .arg(".")
+            .output();
+    }
+}
+#[cfg(windows)]
+fn mv_more_than_one(files: Vec<String>) {
+    for i in files.iter().skip(1) {
+        let _ = Command::new("move")
             .arg(i)
             .arg(".")
             .output();
